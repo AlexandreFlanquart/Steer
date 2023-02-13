@@ -10,4 +10,8 @@
 
 ## Objectifs
 - Les fonctions seek,flee,pursuit,arrival,evade fonctionnent correctement 
-- Probleme avec les fonctions de circuit
+- Pour les modes 
+   :WAY1 (passe une fois part point)
+   :WAY2 (fait un aller retour)
+   :CIRCUIT (clicle en continu)
+   ils sont implémenté je ne suis pas parvenu a afficher les points de passage sur la map + probleme de détection lié a ces points
