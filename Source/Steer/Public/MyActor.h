@@ -19,11 +19,9 @@ public:
 	APlayerController* controller;
 	FVector acceleration;
 	float max_force;
-	FVector target;
-
-	//Mode mode;
+	int sens;
 	float mass;
-	FVector position;
+	//FVector position;
 	FVector velocity;
 
 	float max_speed;
@@ -39,5 +37,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void Move(float DeltaTime);
+	void Seek(FVector position, FVector target, float DeltaTime);
+	void Flee(FVector position, FVector target, float DeltaTime);
+	void Pursuit(FVector position, FVector target, float DeltaTime);
+	void Arrival(FVector position, FVector target, float DeltaTime);
+	void Evade(FVector position, FVector target, float DeltaTime);
 
 };

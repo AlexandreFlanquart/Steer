@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Circuit.h"
-#include <vector>
+
 
 
 // Sets default values
@@ -16,13 +16,11 @@ ACircuit::ACircuit()
 void ACircuit::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-	//mesh->SetupAttachment(RootComponent);
+	/*
+	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	mesh->SetupAttachment(RootComponent);
 	
-	
-	
-	/*static ConstructorHelpers::FObjectFinder<UStaticMesh> BaseMeshAsset(TEXT("StaticMesh'/Game/StarterContent/Props/MaterialSphere.MaterialSphere'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> BaseMeshAsset(TEXT("StaticMesh'/Game/StarterContent/Props/MaterialSphere.MaterialSphere'"));
 
 	if (BaseMeshAsset.Object)
 	{
