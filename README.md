@@ -14,4 +14,4 @@
    :WAY1 (passe une fois part point)
    :WAY2 (fait un aller retour)
    :CIRCUIT (clicle en continu)
-   ils sont implémenté je ne suis pas parvenu a afficher les points de passage sur la map + probleme de détection lié a ces points
+   ils sont implémenté (avec seek et arrival) je ne suis pas parvenu a afficher les points de passage sur la map + probleme de détection lié a ces points
