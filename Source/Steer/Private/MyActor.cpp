@@ -240,12 +240,18 @@ void AMyActor::Move(float DeltaTime)
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("WAY1"));
 		//GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, FString::Printf(TEXT("Hello %d"), point));
 		sens = 1;
-		Seek(position, way1[point], DeltaTime);
+		if(point == 4)
+			Arrival(position, way1[point], DeltaTime);
+		else
+			Seek(position, way1[point], DeltaTime);
 		break;
 	case Mode::WAY2:
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("WAY2"));
 		//GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, FString::Printf(TEXT("Hello %d"), point));
-		Seek(position, way1[point], DeltaTime);
+		if (point == 1 && sens == -1)
+			Arrival(position, way1[point], DeltaTime);
+		else
+			Seek(position, way1[point], DeltaTime);
 		if (point == 4)
 			sens = -1;
 
