@@ -20,7 +20,6 @@ void AMyActor::BeginPlay()
 	Super::BeginPlay();
 
 	controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	//target = controller->GetPawn()->GetActorLocation();
 	mass = 15;
 	max_speed = 200;
 	max_force = 40;
@@ -238,7 +237,6 @@ void AMyActor::Move(float DeltaTime)
 		
 	case Mode::WAY1:
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("WAY1"));
-		//GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, FString::Printf(TEXT("Hello %d"), point));
 		sens = 1;
 		if(point == 4)
 			Arrival(position, way1[point], DeltaTime);
@@ -247,7 +245,6 @@ void AMyActor::Move(float DeltaTime)
 		break;
 	case Mode::WAY2:
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("WAY2"));
-		//GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, FString::Printf(TEXT("Hello %d"), point));
 		if (point == 1 && sens == -1)
 			Arrival(position, way1[point], DeltaTime);
 		else
@@ -258,7 +255,6 @@ void AMyActor::Move(float DeltaTime)
 		break;
 	case Mode::CIRCUIT:
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("CIRCUIT"));
-		//GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, FString::Printf(TEXT("Hello %d"), point));
 		Seek(position, way1[point], DeltaTime);
 		if (point == 4)
 			sens = -1;
