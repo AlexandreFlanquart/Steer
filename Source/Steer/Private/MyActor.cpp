@@ -129,7 +129,7 @@ void AMyActor::Pursuit(FVector position, FVector target, float DeltaTime) {
 	velocity = truncate(velocity + acceleration, max_speed);
 	position = position + velocity * DeltaTime;
 
-	if (velocity.Length() < 10) {
+	if (velocity.Length() < 1) {
 		if (point < 4)
 			point++;
 	}
@@ -196,7 +196,12 @@ void AMyActor::Arrival(FVector position, FVector target, float DeltaTime) {
 		velocity = truncate(velocity + acceleration, max_speed);
 	else velocity = velocity + acceleration;
 	
-
+	if (velocity.Length() < 1) {
+		if (point < 4 && point > 0)
+			point += sens;
+		if (point == 0 && sens > 0)
+			point += sens;
+	}
 
 	force = truncate(steering, max_force);
 	acceleration = force / mass;

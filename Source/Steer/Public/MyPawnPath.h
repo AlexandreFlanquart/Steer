@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include <MyGameInstance.h>
+#include <list>
 #include "MyPawnPath.generated.h"
+
+using namespace std;
 
 UCLASS()
 class STEER_API AMyPawnPath : public APawn
@@ -12,6 +16,16 @@ class STEER_API AMyPawnPath : public APawn
 	GENERATED_BODY()
 
 public:
+	UMyGameInstance* GI;
+	bool m;
+
+	list<FVector> path;
+	FVector acceleration;
+	FVector velocity;
+	float mass;
+	float max_speed;
+	float max_force; 
+
 	// Sets default values for this pawn's properties
 	AMyPawnPath();
 
@@ -25,5 +39,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void MovePawn(float DeltaTime);
+	void ChangeMode();
+	void Seek(FVector position, FVector target, float DeltaTime);
+	//FVector truncate(FVector vec, float max);
 
 };

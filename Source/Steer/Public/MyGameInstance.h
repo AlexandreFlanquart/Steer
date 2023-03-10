@@ -16,9 +16,15 @@ enum  Mode {
 	ARRIVAL,
 	EVADE,
 	PURSUIT,
+	CIRCUIT,
 	WAY1,
 	WAY2,
-	CIRCUIT
+};
+
+UENUM()
+enum  ModePath {
+	PATH,
+	LOOP
 };
 
 
@@ -28,5 +34,6 @@ class STEER_API UMyGameInstance : public UGameInstance
 	GENERATED_BODY()
 public:
 		Mode mode;
+		ModePath modePath;
 		UMyGameInstance();
 };
