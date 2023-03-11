@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include <MyGameInstance.h>
-#include <list>
+#include <MyNode.h>
+#include <Graph.h>
 #include "MyPawnPath.generated.h"
+
 
 using namespace std;
 
@@ -19,7 +21,10 @@ public:
 	UMyGameInstance* GI;
 	bool m;
 
-	list<FVector> path;
+	Graph graph;
+	vector<AMyNode*> listNodes; // to touch
+	vector<AMyNode*> path; // path to do
+
 	FVector acceleration;
 	FVector velocity;
 	float mass;

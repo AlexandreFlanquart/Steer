@@ -17,7 +17,7 @@ void AMyPawnPath::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	path = list<FVector>();
+	path = vector<AMyNode*>();
 
 	GI = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	m = 0;
@@ -76,17 +76,30 @@ void AMyPawnPath::Seek(FVector position, FVector target, float DeltaTime) {
 		SetActorRotation(newV.Rotation());
 }
 
-
-
-
 void AMyPawnPath::ChangeMode() {
 	m = !m;
 	GI->modePath = static_cast<ModePath>(m);
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("mode"));
+	if(m)
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("PATH"));
+	else
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("LOOP"));
 }
 
 void AMyPawnPath::MovePawn(float DeltaTime) {
 	FVector position = this->GetActorLocation();
+	float dist = 0;
+
+	if (!path.empty()) { // if path in progress
+		Seek(position, path[0]->GetActorLocation(), DeltaTime);
+		dist = position.Length() - path[0]->GetActorLocation().Length();
+		if (abs(dist) <= 2) { // if arrive
+			path.erase(path.begin());
+		}
+	}
+	else { // else search next path
+
+	}
+	
 	/*
 	switch (GI->modePath) {
 		case ModePath::PATH

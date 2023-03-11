@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include <list>
+#include <MyNode.h>
 
-#include "Node.h"
 
 using namespace std;
 
@@ -15,12 +15,14 @@ using namespace std;
  */
 class STEER_API Graph{
 public:
-	list<Node> listNodes = list<Node>();
-	list<Node> listPath = list<Node>();
+	vector<AMyNode*> allNodes;
 
 	Graph();
 	~Graph();
 
-	float Distance(Node n1, Node n2);
-	bool IsList(Node n1, list<Node> l);
+	void CalculHeuristique(AMyNode* end);
+	float Distance(AMyNode* n1, AMyNode* n2);
+	void CalculNode(AMyNode* n, AMyNode* current);
+	int ClosestNeighbor(vector<AMyNode*> l, AMyNode* current);
+	vector<AMyNode*> AStar(AMyNode* start, AMyNode* end);
 };

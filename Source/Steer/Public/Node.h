@@ -11,7 +11,7 @@ using namespace std;
 class STEER_API Node
 {
 public:
-	list<Node> listNeighbor = list<Node>();
+	
 
 	Node();
 	~Node();
