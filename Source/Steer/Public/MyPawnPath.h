@@ -22,8 +22,11 @@ public:
 	bool m;
 
 	Graph graph;
-	vector<AMyNode*> listNodes; // to touch
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AMyNode*> listNodes = TArray<AMyNode*>(); // to touch
 	vector<AMyNode*> path; // path to do
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AMyNode* start;
 
 	FVector acceleration;
 	FVector velocity;

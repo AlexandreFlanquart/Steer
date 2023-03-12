@@ -15,7 +15,7 @@ AMyNode::AMyNode()
 void AMyNode::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	isNext = false;
 }
 
 // Called every frame

@@ -15,6 +15,7 @@ class STEER_API AMyNode : public AActor
 	GENERATED_BODY()
 	
 public:	
+	bool isNext;
 	int id;
 	int cost;
 	float dist;

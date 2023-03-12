@@ -2,12 +2,24 @@
 
 
 #include "Graph.h"
+#include <Kismet/GameplayStatics.h>
 
-Graph::Graph()
+Graph::Graph() {
+
+}
+
+Graph::Graph(UWorld* const World)
 {
 	//find all nodes
-	// TArray<AActor*> FoundActors;
-	// UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMyNode, FoundActors);
+	 TArray<AActor*> FoundActors;
+	 UGameplayStatics::GetAllActorsOfClass(World, AMyNode::StaticClass(), FoundActors);
+
+	 for (int i = 0; i < FoundActors.Num(); i++) {
+		 allNodes.push_back((AMyNode*)(FoundActors[i]));
+		 GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Green,  FoundActors[i]->GetName());
+		 //UE_LOG(LogTemp, Warning, TEXT("test"));
+		// printFString("Name : %s", FoundActors[i]->GetName());
+	 }
 
 	// calcul heuristique
 	//CalculHeuristique();
@@ -72,6 +84,7 @@ vector<AMyNode*>  Graph::AStar(AMyNode* start, AMyNode* end) {
 	bool find = false;
 
 	openListe.push_back(start);
+	CalculHeuristique(end);
 
 	while (!openListe.empty()) {
 		pos = ClosestNeighbor(openListe, current);
@@ -79,11 +92,11 @@ vector<AMyNode*>  Graph::AStar(AMyNode* start, AMyNode* end) {
 
 		for (AMyNode* c : current->listNeighbor) // add child
 		{
-			if (!InList(c, openListe) & !InList(c, closeListe)) {// not already check
+			if (!InList(c, openListe) && !InList(c, closeListe)) {// not already check
 				openListe.push_back(c);
 			}
 			CalculNode(c, current);
-			if (c == end) {
+			if (c->GetName() == end->GetName()) {
 				find = true;
 				break;
 			}
@@ -95,7 +108,13 @@ vector<AMyNode*>  Graph::AStar(AMyNode* start, AMyNode* end) {
 	}
 
 	if (find == true) {
-
+		path.insert(path.begin(), end);
+		AMyNode* cur = path[0];
+		while (cur->parent != nullptr) {
+			GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Red, path[0]->GetName());
+			path.insert(path.begin(), path[0]->parent);
+			cur = path[0];
+		}
 	}
 	else {
 		path.push_back(start);

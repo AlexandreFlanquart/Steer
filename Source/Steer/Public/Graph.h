@@ -15,9 +15,10 @@ using namespace std;
  */
 class STEER_API Graph{
 public:
-	vector<AMyNode*> allNodes;
+	vector<AMyNode*> allNodes = vector<AMyNode*>();
 
 	Graph();
+	Graph(UWorld* const World);
 	~Graph();
 
 	void CalculHeuristique(AMyNode* end);

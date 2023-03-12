@@ -18,7 +18,7 @@ void AMyPawnPath::BeginPlay()
 	Super::BeginPlay();
 	
 	path = vector<AMyNode*>();
-
+	graph = Graph(GetWorld());
 	GI = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	m = 0;
 
@@ -41,7 +41,7 @@ void AMyPawnPath::Tick(float DeltaTime)
 void AMyPawnPath::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	//InputComponent->BindAction("SwitchMode", IE_Pressed, this, &AMyPawnPath::ChangeMode);
+	InputComponent->BindAction("SwitchMode", IE_Pressed, this, &AMyPawnPath::ChangeMode);
 
 }
 
@@ -62,7 +62,7 @@ void AMyPawnPath::Seek(FVector position, FVector target, float DeltaTime) {
 
 	direction = target - position;
 	direction = direction * max_speed;
-	steering = direction - velocity;
+	steering = direction ;
 
 	force = Truncate(steering, max_force);
 	acceleration = force / mass;
@@ -90,6 +90,8 @@ void AMyPawnPath::MovePawn(float DeltaTime) {
 	float dist = 0;
 
 	if (!path.empty()) { // if path in progress
+		//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Blue, path[0]->GetName());
+		path[0]->isNext = true;
 		Seek(position, path[0]->GetActorLocation(), DeltaTime);
 		dist = position.Length() - path[0]->GetActorLocation().Length();
 		if (abs(dist) <= 2) { // if arrive
@@ -97,6 +99,13 @@ void AMyPawnPath::MovePawn(float DeltaTime) {
 		}
 	}
 	else { // else search next path
+		if (!listNodes.IsEmpty()) {
+			GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, listNodes[0]->GetName());
+			path = graph.AStar(start, listNodes[0]);
+			if (GI->modePath == ModePath::PATH) {// check if need to loop
+				listNodes.RemoveAt(0);
+			}
+		}
 
 	}
 	
