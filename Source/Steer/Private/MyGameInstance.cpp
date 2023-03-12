@@ -5,5 +5,5 @@
 
 UMyGameInstance::UMyGameInstance() {
 	mode = Mode::SEEK;
-	modePath = ModePath::PATH;
+	modePath = ModePath::LOOP;
 }

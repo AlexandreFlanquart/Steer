@@ -49,6 +49,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void MovePawn(float DeltaTime);
+	UFUNCTION(BlueprintCallable)
 	void ChangeMode();
 	void Seek(FVector position, FVector target, float DeltaTime);
 	//FVector truncate(FVector vec, float max);

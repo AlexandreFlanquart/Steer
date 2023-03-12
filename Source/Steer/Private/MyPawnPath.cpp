@@ -20,7 +20,7 @@ void AMyPawnPath::BeginPlay()
 	path = vector<AMyNode*>();
 	graph = Graph(GetWorld());
 	GI = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	m = 0;
+	m = true;
 
 	mass = 15;
 	max_speed = 200;
@@ -78,11 +78,16 @@ void AMyPawnPath::Seek(FVector position, FVector target, float DeltaTime) {
 
 void AMyPawnPath::ChangeMode() {
 	m = !m;
-	GI->modePath = static_cast<ModePath>(m);
-	if(m)
+
+	if (m) {
+		GI->modePath = static_cast<ModePath>(0);
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("PATH"));
-	else
+	}	
+	else {
+		GI->modePath = static_cast<ModePath>(1);
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("LOOP"));
+	}
+		
 }
 
 void AMyPawnPath::MovePawn(float DeltaTime) {
@@ -105,9 +110,10 @@ void AMyPawnPath::MovePawn(float DeltaTime) {
 		if (!listNodes.IsEmpty()) {
 			GEngine->AddOnScreenDebugMessage(-1, 200, FColor::Red, listNodes[0]->GetName());
 			path = graph.AStar(start, listNodes[0]);
-			if (GI->modePath == ModePath::PATH) {// check if need to loop
-				listNodes.RemoveAt(0);
+			if (GI->modePath == ModePath::LOOP) {// check if need to loop
+				//listNodes.Add(listNodes[0]);
 			}
+			listNodes.RemoveAt(0);
 		}
 
 	}

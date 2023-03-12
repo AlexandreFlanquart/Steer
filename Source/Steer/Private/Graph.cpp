@@ -54,12 +54,13 @@ bool InList(AMyNode* n1, vector<AMyNode*> l) {
 
 void  Graph::CalculNode(AMyNode* n, AMyNode* current) {
 	float temp = Distance(n, current) + current->dist + n->heuristique;
-	if (temp <= n->cost) {
+	if (temp < n->cost) {
 		n->dist = Distance(n, current) + current->dist;
 		n->cost = n->dist + n->heuristique;
-		n->parent = current;
+		n->parent = current;		
 		GEngine->AddOnScreenDebugMessage(-1, 100, FColor::Blue, TEXT("parent"));
 	}
+
 }
 
 int  Graph::ClosestNeighbor(vector<AMyNode*> l, AMyNode* current) {
@@ -72,7 +73,6 @@ int  Graph::ClosestNeighbor(vector<AMyNode*> l, AMyNode* current) {
 			min = c->cost;
 			pos = i;
 		}
-		// if ==
 		i++;
 	}
 	return pos;
@@ -94,16 +94,16 @@ vector<AMyNode*>  Graph::AStar(AMyNode* start, AMyNode* end) {
 	while (!openListe.empty()) {
 		pos = ClosestNeighbor(openListe, current);
 		current = openListe[pos];
-		GEngine->AddOnScreenDebugMessage(-1, 100, FColor::Blue, TEXT("A*"));
+		//GEngine->AddOnScreenDebugMessage(-1, 100, FColor::Blue, TEXT("A*"));
 		for (AMyNode* c : current->listNeighbor) // add child
 		{
 			if (!InList(c, openListe) && !InList(c, closeListe)) {// not already check
 				openListe.push_back(c);
 			}
-			GEngine->AddOnScreenDebugMessage(-1, 100, FColor::Blue, TEXT("CALCUL"));
+			//GEngine->AddOnScreenDebugMessage(-1, 100, FColor::Blue, TEXT("CALCUL"));
 			CalculNode(c, current);
 			if (c == end) {
-				GEngine->AddOnScreenDebugMessage(-1, 100, FColor::Blue, TEXT("FIN"));
+				//GEngine->AddOnScreenDebugMessage(-1, 100, FColor::Blue, TEXT("FIN"));
 				find = true;
 				break;
 			}
@@ -118,7 +118,7 @@ vector<AMyNode*>  Graph::AStar(AMyNode* start, AMyNode* end) {
 	if (find == true) {
 		path.insert(path.begin(), end);
 		AMyNode* cur = path[0];
-		GEngine->AddOnScreenDebugMessage(-1, 400, FColor::Green, path[0]->GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 400, FColor::Green, path[0]->GetName());
 		while (cur->parent != nullptr) {
 			GEngine->AddOnScreenDebugMessage(-1, 400, FColor::Green, path[0]->GetName());
 			path.insert(path.begin(), path[0]->parent);
