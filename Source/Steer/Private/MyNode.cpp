@@ -16,6 +16,9 @@ void AMyNode::BeginPlay()
 {
 	Super::BeginPlay();
 	isNext = false;
+	cost = 1000;
+	dist = 0;
+	heuristique = 0;
 }
 
 // Called every frame

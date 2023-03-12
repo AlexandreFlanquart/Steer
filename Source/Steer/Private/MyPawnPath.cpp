@@ -24,7 +24,7 @@ void AMyPawnPath::BeginPlay()
 
 	mass = 15;
 	max_speed = 200;
-	max_force = 40;
+	max_force = 70;
 	velocity = FVector(1, 1, 0);
 }
 
@@ -62,7 +62,7 @@ void AMyPawnPath::Seek(FVector position, FVector target, float DeltaTime) {
 
 	direction = target - position;
 	direction = direction * max_speed;
-	steering = direction ;
+	steering = direction - velocity;
 
 	force = Truncate(steering, max_force);
 	acceleration = force / mass;
@@ -90,17 +90,20 @@ void AMyPawnPath::MovePawn(float DeltaTime) {
 	float dist = 0;
 
 	if (!path.empty()) { // if path in progress
-		//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Blue, path[0]->GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, path[0]->GetName());
 		path[0]->isNext = true;
 		Seek(position, path[0]->GetActorLocation(), DeltaTime);
-		dist = position.Length() - path[0]->GetActorLocation().Length();
-		if (abs(dist) <= 2) { // if arrive
+		//dist = this->GetActorLocation().Length() - path[0]->GetActorLocation().Length();
+		//dist = position.Distance(position, path[0]->GetActorLocation());
+		dist = FVector::Dist(position, path[0]->GetActorLocation());
+		if (abs(dist) <= 50) { // if arrive
+			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, TEXT("ARRIVE"));
 			path.erase(path.begin());
 		}
 	}
 	else { // else search next path
 		if (!listNodes.IsEmpty()) {
-			GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, listNodes[0]->GetName());
+			GEngine->AddOnScreenDebugMessage(-1, 200, FColor::Red, listNodes[0]->GetName());
 			path = graph.AStar(start, listNodes[0]);
 			if (GI->modePath == ModePath::PATH) {// check if need to loop
 				listNodes.RemoveAt(0);
@@ -108,16 +111,4 @@ void AMyPawnPath::MovePawn(float DeltaTime) {
 		}
 
 	}
-	
-	/*
-	switch (GI->modePath) {
-		case ModePath::PATH
-			
-			break;
-		case ModePath::PATH
-				
-			break;
-	}
-	Seek(position, target, DeltaTime);
-	*/
 }
